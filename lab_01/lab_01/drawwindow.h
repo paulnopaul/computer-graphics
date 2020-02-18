@@ -5,6 +5,8 @@
 #include <QPainter>
 #include <QPaintEvent>
 #include <QTimer>
+#include <vector>
+#include <QVector>
 
 class DrawWindow : public QWidget
 {
@@ -17,6 +19,9 @@ public:
     DrawWindow(QWidget *parent = 0);
     ~DrawWindow();
 
+    void addPoint(QPoint p);
+private:
+    QVector<QPoint> points;
 };
 
 #endif // DRAWWINDOW_H
