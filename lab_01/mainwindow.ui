@@ -20,7 +20,7 @@
       <x>10</x>
       <y>430</y>
       <width>471</width>
-      <height>121</height>
+      <height>51</height>
      </rect>
     </property>
     <property name="text">
@@ -151,10 +151,18 @@
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="fTriX"/>
+            <widget class="QLineEdit" name="fTriX">
+             <property name="text">
+              <string>0</string>
+             </property>
+            </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="fTriY"/>
+            <widget class="QLineEdit" name="fTriY">
+             <property name="text">
+              <string>0</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>
@@ -168,10 +176,18 @@
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="sTriX"/>
+            <widget class="QLineEdit" name="sTriX">
+             <property name="text">
+              <string>10</string>
+             </property>
+            </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="sTriY"/>
+            <widget class="QLineEdit" name="sTriY">
+             <property name="text">
+              <string>10</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>
@@ -185,10 +201,18 @@
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="tTriX"/>
+            <widget class="QLineEdit" name="tTriX">
+             <property name="text">
+              <string>20</string>
+             </property>
+            </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="tTriY"/>
+            <widget class="QLineEdit" name="tTriY">
+             <property name="text">
+              <string>0</string>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>
@@ -211,7 +235,7 @@
      <string>Добавить точку</string>
     </property>
    </widget>
-   <widget class="MyDrawWidget" name="widget" native="true">
+   <widget class="MyDrawWidget" name="drawWidget" native="true">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -219,6 +243,19 @@
       <width>561</width>
       <height>411</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="showButton">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>500</y>
+      <width>471</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Показать введенные точки и треугольник</string>
     </property>
    </widget>
   </widget>

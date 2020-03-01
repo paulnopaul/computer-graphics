@@ -69,10 +69,12 @@ void MainWindow::on_solveButton_clicked()
         // add to Solution
         this->solution.setTriangle(tx1, ty1, tx2, ty2, tx3, ty3);
         // add to draw
-        this->ui->drawWidget->updateTriangle(tx1, ty1, tx2, ty2, tx3, ty3);
+        ui->drawWidget->updateTriangle(tx1, ty1, tx2, ty2, tx3, ty3);
 
-        this->solution.solve(x, y, r);
-
+        if (this->solution.solve(x, y, r) == 0)
+            ui->drawWidget->isSolved(true);
+        
+        
     }
     else
         ui->statusbar->showMessage("Неверные координаты треугольника", 500);

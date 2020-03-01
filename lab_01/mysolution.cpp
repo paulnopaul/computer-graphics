@@ -16,6 +16,21 @@ void MySolution::addDot(double x, double y)
     this->dots.push_back({x, y});
 }
 
+bool MySolution::checkTriangle(pair<double, double> d1, pair<double, double> d2, pair<double, double> d3)
+{
+    if (!dotsEqual(d1, d2) && !dotsEqual(d2, d3) && !dotsEqual(d1, d3))
+        return true;
+    return false;
+}
+
+bool MySolution::dotsEqual(pair<double, double> a, pair<double, double> b)
+{
+    if (fabs(a.first - b.first) < MySolution::eps &&
+        fabs(a.second - b.second) < MySolution::eps)
+        return true;
+    return false;
+}
+
 void MySolution::deleteDot(int n)
 {
     if (n < (int)this->dots.size())
@@ -34,6 +49,7 @@ int MySolution::solve(double &_x, double &_y, double &_r)
     for (pair<double, double> dot1 : this->dots)
         for (pair<double, double> dot2 : this->dots)
             for (pair<double, double> dot3 : this->dots)
+            {
                 if (dot1 != dot2 && dot1 != dot3 && dot2 != dot3)
                     if (this->checkCircle(dot1, dot2, dot3) &&
                             (area = myArea(dot1, dot2, dot3)) > max_area)
@@ -41,6 +57,11 @@ int MySolution::solve(double &_x, double &_y, double &_r)
                             max_area = area;
                             setCircleParams(dot1, dot2, dot3);
                     }
+                /*
+                cout << dot1.first << " " << dot1.second <<
+                        dot2.first << " " << dot2.second <<
+                        dot3.first << " " << dot3.second << endl;*/
+            }
     if (max_area != -1)
     {
         _x = this->x0;
@@ -69,6 +90,9 @@ bool MySolution::checkCircle(pair<double, double> d1,
                              pair<double, double> d2,
                              pair<double, double> d3)
 {
+    cout << d1.first << " " << d1.second << " " <<
+            d2.first << " " << d2.second << " " <<
+            d3.first << " " << d3.second << endl;
     vector<double> circle =  this->circleParams(d1, d2, d3);
     double x0 = circle[0], y0 = circle[1], r = circle[2];
     double aL, bL, cL;
@@ -76,15 +100,15 @@ bool MySolution::checkCircle(pair<double, double> d1,
     this->lineCoeffs(aL, bL, cL, this->triangle[0], this->triangle[1]);
     if (this->isTouching(aL, bL, cL, x0, y0, r))
         return true;
-
+    // cout << aL << " " << bL << " " << cL << endl;
     this->lineCoeffs(aL, bL, cL, this->triangle[1], this->triangle[2]);
     if (this->isTouching(aL, bL, cL, x0, y0, r))
         return true;
-
+    // cout << aL << " " << bL << " " << cL << endl;
     this->lineCoeffs(aL, bL, cL, this->triangle[0], this->triangle[2]);
     if (this->isTouching(aL, bL, cL, x0, y0, r))
         return true;
-
+    // cout << aL << " " << bL << " " << cL << endl;
     return false;
 }
 
@@ -125,10 +149,20 @@ double MySolution::triangleArea(pair<double, double> d1,
 
 bool MySolution::isTouching(double a, double b, double c, double x0, double y0, double r)
 {
-    double aSq = ((b * b) / (a * a)) + 1;
-    double bSq = 2 * b * c / (a * a) + 2 * (b / a) * x0 - 2 * y0;
-    double cSq = 2 * x0 * c / a + (c * c) / (a * a) + y0 * y0 + x0 * x0 + r * r;
-    double dSq = bSq * bSq - 4 * aSq * cSq;
+    double dSq, aSq, bSq, cSq;
+    if (fabs(a) < this->eps)
+    {
+        aSq = ((b * b) / (a * a)) + 1;
+        bSq = 2 * b * c / (a * a) + 2 * (b / a) * x0 - 2 * y0;
+        cSq = 2 * x0 * c / a + (c * c) / (a * a) + y0 * y0 + x0 * x0 + r * r;
+    }
+    else
+    {
+        aSq = 1;
+        bSq = 2 * x0;
+        cSq = x0 * x0 + y0 * y0 + (c * c) / (b * b) + 2 * y0 * c / b - r * r;
+    }
+    dSq = bSq * bSq - 4 * aSq * cSq;
     if (fabs(dSq) < this->eps)
         return true;
     return false;

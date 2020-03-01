@@ -1,5 +1,8 @@
 #include "mydrawwidget.h"
 
+#include <cstdio>
+using namespace std;
+
 MyDrawWidget::MyDrawWidget(QWidget *parent) : QWidget(parent), triangle(3)
 {
     complete = 0;
@@ -15,17 +18,116 @@ void MyDrawWidget::paintEvent(QPaintEvent *event)
     QPen blackPen(Qt::black);
     QPen redPen(Qt::red);
 
-
     p.fillRect(this->rect(), whiteBrush);
+
+    if (this->complete || this->solved)
+        this->setScale();
     if (this->complete)
         this->drawArea(p);
     if (this->solved)
         this->drawSolution(p);
+
+    p.end();
+}
+
+void MyDrawWidget::setScale()
+{
+    pair<double, double> left, right, up, down;
+    double height, width;
+
+    left = this->leftPoint();
+    right = this->rightPoint();
+    up = this->upPoint();
+    down = this->downPoint();
+
+    height = this->rect().height() - 10;
+    width = this->rect().width() - 10;
+
+    this->scale = min(height / fabs(up.second - down.second),
+                      width / fabs(left.first - right.first));
+    this->move.first = -left.first;
+    this->move.second = -down.second;
+}
+
+pair<double, double> MyDrawWidget::leftPoint()
+{
+    pair<double, double> point = this->dots[0];
+    for (const pair<double, double> &p : this->dots)
+        if (point.first > p.first)
+            point = p;
+    for (const pair<double, double> &p : this->triangle)
+        if (point.first > p.first)
+            point = p;
+   return point;
+}
+
+pair<double, double> MyDrawWidget::rightPoint()
+{
+    pair<double, double> point = this->dots[0];
+    for (const pair<double, double> &p : this->dots)
+        if (point.first < p.first)
+            point = p;
+    for (const pair<double, double> &p : this->triangle)
+        if (point.first < p.first)
+            point = p;
+    return point;
+}
+
+pair<double, double> MyDrawWidget::downPoint()
+{
+    pair<double, double> point = this->dots[0];
+    for (const pair<double, double> &p : this->dots)
+        if (point.second > p.second)
+            point = p;
+    for (const pair<double, double> &p : this->triangle)
+        if (point.second > p.second)
+            point = p;
+    return point;
+}
+
+pair<double, double> MyDrawWidget::upPoint()
+{
+    pair<double, double> point = this->dots[0];
+    for (const pair<double, double> &p : this->dots)
+        if (point.second < p.second)
+            point = p;
+    for (const pair<double, double> &p : this->triangle)
+        if (point.second < p.second)
+            point = p;
+    return point;
 }
 
 void MyDrawWidget::drawArea(QPainter &p)
 {
-    return;
+    QBrush redBrush(Qt::red);
+    QBrush transBrush(Qt::transparent);
+    QPen bluePen(Qt::blue);
+    QPen blackPen(Qt::black);
+    p.setPen(blackPen);
+    p.setBrush(redBrush);
+    for (const pair<double, double> &d : this->dots)
+    {
+        p.drawEllipse((d.first + this->move.first) * scale,
+                      (d.second + this->move.second) * scale,
+                      5, 5);
+        // cout << (d.first - this->move.first) * scale << " " << (d.second - this->move.second) * scale << endl;
+    }
+
+    p.setPen(bluePen);
+    p.setBrush(transBrush);
+    QPolygonF tri({QPointF((this->triangle[0].first + this->move.first) * scale,
+                           (this->triangle[0].second + this->move.second) * scale),
+                   QPointF((this->triangle[1].first + this->move.first) * scale,
+                           (this->triangle[1].second + this->move.second) * scale),
+                   QPointF((this->triangle[2].first + this->move.first) * scale,
+                           (this->triangle[2].second + this->move.second) * scale)});
+
+    // cout << this->triangle[0].first << " " << this->triangle[0].second << " " <<
+    //        this->triangle[1].first << " " << this->triangle[1].second << " " <<
+    //        this->triangle[2].first << " " <<  this->triangle[2].second << endl;
+    // cout << endl;
+
+    p.drawPolygon(tri);
 }
 
 void MyDrawWidget::drawSolution(QPainter &p)

@@ -22,6 +22,11 @@ public:
                      double x3, double y3);
     int solve(double &x, double &y, double &r);
 
+    static bool checkTriangle(pair<double, double> d1,
+                       pair<double, double> d2,
+                       pair<double, double> d3);
+    static bool dotsEqual(pair<double, double> a, pair<double, double> b);
+
     static double eps;
 private:
     double x0, y0, r;
@@ -29,29 +34,29 @@ private:
     vector<pair<double, double>> triangle;
 
     bool checkCircle(pair<double, double> d1,
-                      pair<double, double> d2,
-                      pair<double, double> d3);
+                     pair<double, double> d2,
+                     pair<double, double> d3);
 
     double myArea(pair<double, double> d1,
-                   pair<double, double> d2,
-                   pair<double, double> d3);
+                  pair<double, double> d2,
+                  pair<double, double> d3);
 
     // geometry
     double triangleArea(pair<double, double> d1,
-                         pair<double, double> d2,
-                         pair<double, double> d3);
+                        pair<double, double> d2,
+                        pair<double, double> d3);
 
     pair<double, double> triangleCenter(pair<double, double> d1,
-                                         pair<double, double> d2,
-                                         pair<double, double> d3);
+                                        pair<double, double> d2,
+                                        pair<double, double> d3);
 
     vector<double> touchingLineParams(pair<double, double> d1,
-                                     pair<double, double> d2,
-                                     pair<double, double> d3);
+                                      pair<double, double> d2,
+                                      pair<double, double> d3);
 
     void setCircleParams(pair<double, double> d1,
-                          pair<double, double> d2,
-                          pair<double, double> d3);
+                         pair<double, double> d2,
+                         pair<double, double> d3);
 
     bool isTouching(double a, double b, double c, double x0, double y0, double r);
 
@@ -62,8 +67,8 @@ private:
                            pair<double, double> d2);
 
     vector<double> circleParams(pair<double, double> d1,
-                         pair<double, double> d2,
-                         pair<double, double> d3);
+                                pair<double, double> d2,
+                                pair<double, double> d3);
 
 };
 

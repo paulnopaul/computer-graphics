@@ -29,6 +29,8 @@ private slots:
 
     void keyPressEvent(QKeyEvent *e);
 
+    void on_showButton_clicked();
+
 private:
     Ui::MainWindow  *ui;
     int dotNumber;

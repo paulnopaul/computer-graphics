@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <vector>
 #include <algorithm>
+#include <cmath>
+#include <iostream>
 #include <QPainter>
 
 using namespace std;
@@ -24,9 +26,18 @@ public:
     void drawArea(QPainter &p);
     void paintEvent(QPaintEvent *event = nullptr);
 private:
+    pair<double, double> leftPoint();
+    pair<double, double> rightPoint();
+    pair<double, double> downPoint();
+    pair<double, double> upPoint();
+    void setScale();
+
     vector<pair<double, double>> triangle;
     vector<pair<double, double>> dots;
+
     double scale;
+    pair<double, double> move;
+
     bool complete;
     bool solved;
 };
