@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+using namespace std;
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
@@ -66,12 +68,26 @@ void MainWindow::on_solveButton_clicked()
 
     if (tx1Ok && tx2Ok && tx3Ok && ty1Ok && ty2Ok && ty3Ok)
     {
+        ui->drawWidget->isSolved(false);
         // add to Solution
         this->solution.setTriangle(tx1, ty1, tx2, ty2, tx3, ty3);
         // add to draw
-        this->ui->drawWidget->updateTriangle(tx1, ty1, tx2, ty2, tx3, ty3);
+        ui->drawWidget->updateTriangle(tx1, ty1, tx2, ty2, tx3, ty3);
 
-        this->solution.solve(x, y, r);
+        if (this->solution.solve(x, y, r) == 0)
+        {
+            cout << "YESSS" << endl;
+            ui->drawWidget->isSolved(true);
+            ui->drawWidget->isComplete(true);
+            ui->drawWidget->addSolution(x, y, r);
+            ui->drawWidget->update();
+            QString ans = QString("ANSWER: X = %1; Y = %2; R = %3").arg(QString::number(x), QString::number(y), QString::number(r));
+            ui->statusbar->showMessage(ans,40000);
+        }
+        else
+        {
+            ui->statusbar->showMessage("NO SOLUTION",500);
+        }
 
     }
     else
@@ -147,7 +163,7 @@ void MainWindow::on_deleteButton_clicked()
     if (nOk && n > 0 && n <= this->dotNumber)
     {
         // delete from Solution
-        this->solution.deleteDot(n);
+        this->solution.deleteDot(n - 1);
 
         // delete from table
         ui->dotTable->removeRow(n - 1);

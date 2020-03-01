@@ -45,6 +45,11 @@ void MySolution::setTriangle(double x1, double y1, double x2, double y2,
 
 int MySolution::solve(double &_x, double &_y, double &_r)
 {
+
+    for (const pair<double, double> &d: this->dots)
+        cout << d.first << " " << d.second << " " << endl;
+
+
     double max_area = -1, area;
     for (pair<double, double> dot1 : this->dots)
         for (pair<double, double> dot2 : this->dots)
@@ -90,9 +95,9 @@ bool MySolution::checkCircle(pair<double, double> d1,
                              pair<double, double> d2,
                              pair<double, double> d3)
 {
-    cout << d1.first << " " << d1.second << " " <<
-            d2.first << " " << d2.second << " " <<
-            d3.first << " " << d3.second << endl;
+    // cout << d1.first << " " << d1.second << " " <<
+    //         d2.first << " " << d2.second << " " <<
+    //         d3.first << " " << d3.second << endl;
     vector<double> circle =  this->circleParams(d1, d2, d3);
     double x0 = circle[0], y0 = circle[1], r = circle[2];
     double aL, bL, cL;

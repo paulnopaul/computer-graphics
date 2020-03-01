@@ -14,6 +14,8 @@ void MyDrawWidget::paintEvent(QPaintEvent *event)
 {
     event = nullptr;
     QPainter p(this);
+    p.translate(this->rect().bottomLeft());
+    p.scale(1.0, -1.0);
     QBrush whiteBrush(Qt::white);
     QPen blackPen(Qt::black);
     QPen redPen(Qt::red);
@@ -58,6 +60,8 @@ pair<double, double> MyDrawWidget::leftPoint()
     for (const pair<double, double> &p : this->triangle)
         if (point.first > p.first)
             point = p;
+    if (solved && point.first > resPoint.first - resR)
+        point = {resPoint.first - resR, resPoint.second};
    return point;
 }
 
@@ -70,6 +74,9 @@ pair<double, double> MyDrawWidget::rightPoint()
     for (const pair<double, double> &p : this->triangle)
         if (point.first < p.first)
             point = p;
+    if (point.first < (resPoint.first + resR))
+        point = {resPoint.first + resR, resPoint.second};
+    cout << "LDFKJSKLFJLSD " << resPoint.first + resR << " "<< point.first << endl;
     return point;
 }
 
@@ -82,6 +89,8 @@ pair<double, double> MyDrawWidget::downPoint()
     for (const pair<double, double> &p : this->triangle)
         if (point.second > p.second)
             point = p;
+    if (solved && point.second > resPoint.second - resR)
+        point = {resPoint.first, resPoint.second - resR};
     return point;
 }
 
@@ -94,6 +103,8 @@ pair<double, double> MyDrawWidget::upPoint()
     for (const pair<double, double> &p : this->triangle)
         if (point.second < p.second)
             point = p;
+    if (solved && point.second < resPoint.second + resR)
+        point = {resPoint.first, resPoint.second + resR};
     return point;
 }
 
@@ -107,9 +118,8 @@ void MyDrawWidget::drawArea(QPainter &p)
     p.setBrush(redBrush);
     for (const pair<double, double> &d : this->dots)
     {
-        p.drawEllipse((d.first + this->move.first) * scale,
-                      (d.second + this->move.second) * scale,
-                      5, 5);
+        this->drawCenterCircle(p, (d.first + this->move.first) * scale,
+                      (d.second + this->move.second) * scale, 5);
         // cout << (d.first - this->move.first) * scale << " " << (d.second - this->move.second) * scale << endl;
     }
 
@@ -130,9 +140,29 @@ void MyDrawWidget::drawArea(QPainter &p)
     p.drawPolygon(tri);
 }
 
+void MyDrawWidget::addSolution(double x0, double y0, double r)
+{
+    this->resPoint.first = x0;
+    this->resPoint.second = y0;
+    this->resR = r;
+}
+
+void MyDrawWidget::drawCenterCircle(QPainter &p, double x0, double y0, double r)
+{
+    QRectF elRect(x0 - r, y0 - r, r * 2, r * 2);
+    p.drawEllipse(elRect);
+}
+
 void MyDrawWidget::drawSolution(QPainter &p)
 {
-    return;
+    QPen redPen(Qt::green, 2);
+    p.setPen(redPen);
+    drawCenterCircle(p, (resPoint.first + move.first) * scale,
+                     (resPoint.second + move.second) * scale,
+                     resR * scale);
+    drawCenterCircle(p, (resPoint.first + move.first) * scale,
+                     (resPoint.second + move.second) * scale,
+                     1);
 }
 
 void MyDrawWidget::updateTriangle(double x1, double y1,
