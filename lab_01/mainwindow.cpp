@@ -15,7 +15,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->dotY->setPlaceholderText("Y");
     ui->dotNumber->setPlaceholderText("Номер");
 
-
     // set up table
     dotNumber = 0;
     QPen blackPen(Qt::black);
@@ -54,7 +53,7 @@ void MainWindow::on_solveButton_clicked()
 {
     double tx1, tx2, tx3;
     double ty1, ty2, ty3;
-    double x, y, r;
+    double x, y, r, tx, ty;
     bool tx1Ok, tx2Ok, tx3Ok;
     bool ty1Ok, ty2Ok, ty3Ok;
 
@@ -74,12 +73,12 @@ void MainWindow::on_solveButton_clicked()
         // add to draw
         ui->drawWidget->updateTriangle(tx1, ty1, tx2, ty2, tx3, ty3);
 
-        if (this->solution.solve(x, y, r) == 0)
+        if (this->solution.solve(x, y, r, tx, ty) == 0)
         {
             cout << "YESSS" << endl;
             ui->drawWidget->isSolved(true);
             ui->drawWidget->isComplete(true);
-            ui->drawWidget->addSolution(x, y, r);
+            ui->drawWidget->addSolution(x, y, r, tx, ty);
             ui->drawWidget->update();
             QString ans = QString("ANSWER: X = %1; Y = %2; R = %3").arg(QString::number(x), QString::number(y), QString::number(r));
             ui->statusbar->showMessage(ans,40000);

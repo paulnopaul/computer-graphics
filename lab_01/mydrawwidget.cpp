@@ -1,4 +1,6 @@
+
 #include "mydrawwidget.h"
+#include "mysolution.h"
 
 #include <cstdio>
 using namespace std;
@@ -76,7 +78,7 @@ pair<double, double> MyDrawWidget::rightPoint()
             point = p;
     if (point.first < (resPoint.first + resR))
         point = {resPoint.first + resR, resPoint.second};
-    cout << "LDFKJSKLFJLSD " << resPoint.first + resR << " "<< point.first << endl;
+    // cout << "LDFKJSKLFJLSD " << resPoint.first + resR << " "<< point.first << endl;
     return point;
 }
 
@@ -115,6 +117,7 @@ void MyDrawWidget::drawArea(QPainter &p)
     QPen bluePen(Qt::blue);
     QPen blackPen(Qt::black);
     p.setPen(blackPen);
+
     p.setBrush(redBrush);
     for (const pair<double, double> &d : this->dots)
     {
@@ -132,6 +135,9 @@ void MyDrawWidget::drawArea(QPainter &p)
                    QPointF((this->triangle[2].first + this->move.first) * scale,
                            (this->triangle[2].second + this->move.second) * scale)});
 
+    // this->drawCenterCircle(p, (tCenter.first + this->move.first) * scale,
+     //              (tCenter.second + this->move.second) * scale, 3);
+
     // cout << this->triangle[0].first << " " << this->triangle[0].second << " " <<
     //        this->triangle[1].first << " " << this->triangle[1].second << " " <<
     //        this->triangle[2].first << " " <<  this->triangle[2].second << endl;
@@ -140,11 +146,13 @@ void MyDrawWidget::drawArea(QPainter &p)
     p.drawPolygon(tri);
 }
 
-void MyDrawWidget::addSolution(double x0, double y0, double r)
+void MyDrawWidget::addSolution(double x0, double y0, double r, double _tx, double _ty)
 {
     this->resPoint.first = x0;
     this->resPoint.second = y0;
     this->resR = r;
+    this->tx = _tx;
+    this->ty = _ty;
 }
 
 void MyDrawWidget::drawCenterCircle(QPainter &p, double x0, double y0, double r)
@@ -163,6 +171,20 @@ void MyDrawWidget::drawSolution(QPainter &p)
     drawCenterCircle(p, (resPoint.first + move.first) * scale,
                      (resPoint.second + move.second) * scale,
                      1);
+
+
+    QPen greenPen(Qt::red, 2);
+    p.setPen(greenPen);
+    pair<double, double> tCenter = MySolution::triangleCenter(triangle[0],
+            triangle[1], triangle[2]);
+    QPolygonF tri({QPointF((this->resPoint.first + this->move.first) * scale,
+                           (this->resPoint.second + this->move.second) * scale),
+                   QPointF((tCenter.first + this->move.first) * scale,
+                           (tCenter.second + this->move.second) * scale),
+                   QPointF((this->tx + this->move.first) * scale,
+                           (this->ty + this->move.second) * scale)});
+    p.drawPolygon(tri);
+    cout << tx << " " << ty << endl;
 }
 
 void MyDrawWidget::updateTriangle(double x1, double y1,

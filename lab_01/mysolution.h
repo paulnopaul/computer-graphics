@@ -20,7 +20,7 @@ public:
     void deleteDot(int n);
     void setTriangle(double x1, double y1, double x2, double y2,
                      double x3, double y3);
-    int solve(double &x, double &y, double &r);
+    int solve(double &_x, double &_y, double &_r, double &_tx, double &_ty);
 
     static bool checkTriangle(pair<double, double> d1,
                        pair<double, double> d2,
@@ -28,8 +28,16 @@ public:
     static bool dotsEqual(pair<double, double> a, pair<double, double> b);
 
     static double eps;
+
+    static pair<double, double> triangleCenter(pair<double, double> d1,
+                                        pair<double, double> d2,
+                                        pair<double, double> d3);
+    static void lineCoeffs(double &a, double &b, double &c,
+                           pair<double, double> d1,
+                           pair<double, double> d2);
 private:
-    double x0, y0, r;
+    double x0, y0, r, tx, ty;
+    double cur_tx, cur_ty;
     vector<pair<double, double>> dots;
     vector<pair<double, double>> triangle;
 
@@ -46,10 +54,6 @@ private:
                         pair<double, double> d2,
                         pair<double, double> d3);
 
-    pair<double, double> triangleCenter(pair<double, double> d1,
-                                        pair<double, double> d2,
-                                        pair<double, double> d3);
-
     vector<double> touchingLineParams(pair<double, double> d1,
                                       pair<double, double> d2,
                                       pair<double, double> d3);
@@ -62,9 +66,7 @@ private:
 
     pair<double, double> touchingPoint(double a, double b, double c, double x0, double y0);
 
-    static void lineCoeffs(double &a, double &b, double &c,
-                           pair<double, double> d1,
-                           pair<double, double> d2);
+
 
     vector<double> circleParams(pair<double, double> d1,
                                 pair<double, double> d2,

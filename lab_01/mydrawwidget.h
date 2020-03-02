@@ -17,7 +17,7 @@ public:
     explicit MyDrawWidget(QWidget *parent = nullptr);
 
     void updateTriangle(double x1, double y1, double x2, double y2, double x3, double y3);
-    void addSolution(double x0, double y0, double r);
+    void addSolution(double x0, double y0, double r, double _tx, double _ty);
     void addPoint(double x, double y);
     void deletePoint(int n);
     void isComplete(bool x = false);
@@ -36,6 +36,7 @@ private:
     void setScale();
 
     vector<pair<double, double>> triangle;
+    double tx, ty;
     vector<pair<double, double>> dots;
 
     double scale;

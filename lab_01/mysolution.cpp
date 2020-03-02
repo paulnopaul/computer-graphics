@@ -43,11 +43,11 @@ void MySolution::setTriangle(double x1, double y1, double x2, double y2,
     this->triangle = vector<pair<double, double>>({{x1, y1}, {x2, y2}, {x3, y3}});
 }
 
-int MySolution::solve(double &_x, double &_y, double &_r)
+int MySolution::solve(double &_x, double &_y, double &_r, double &_tx, double &_ty)
 {
 
-    for (const pair<double, double> &d: this->dots)
-        cout << d.first << " " << d.second << " " << endl;
+    // for (const pair<double, double> &d: this->dots)
+    //     cout << d.first << " " << d.second << " " << endl;
 
 
     double max_area = -1, area;
@@ -72,6 +72,8 @@ int MySolution::solve(double &_x, double &_y, double &_r)
         _x = this->x0;
         _y = this->y0;
         _r = this->r;
+        _tx = this->tx;
+        _ty = this->ty;
         return 0;
     }
     return 1;
@@ -155,7 +157,7 @@ double MySolution::triangleArea(pair<double, double> d1,
 bool MySolution::isTouching(double a, double b, double c, double x0, double y0, double r)
 {
     double dSq, aSq, bSq, cSq;
-    if (fabs(a) < this->eps)
+    if (fabs(a) > this->eps)
     {
         aSq = ((b * b) / (a * a)) + 1;
         bSq = 2 * b * c / (a * a) + 2 * (b / a) * x0 - 2 * y0;
@@ -212,11 +214,26 @@ vector<double> MySolution::circleParams(pair<double, double> d1,
 
 pair<double, double> MySolution::touchingPoint(double a, double b, double c, double x0, double y0)
 {
-    double aSq = ((b * b) / (a * a)) + 1;
-    double bSq = 2 * b * c / (a * a) + 2 * (b / a) * x0 - 2 * y0;
+    double aSq, bSq;
     pair<double, double> point;
-    point.second = -bSq / (2 * aSq);
-    point.first = (-b / a) * point.second - c / a;
+    cout << a << " " << b << " " << c << endl;
+    if (fabs(a) > eps)
+    {
+        cout << "HELLLO\n";
+        aSq = ((b * b) / (a * a)) + 1;
+        bSq = 2 * b * c / (a * a) + 2 * (b / a) * x0 - 2 * y0;
+        point.second = (-b / a) * point.second - c / a;
+    }
+    else
+    {
+        cout << "HELLLLLLOOOOOOOOOO\n";
+        aSq = 1;
+        bSq = -2 * x0;
+        point.second = -c / b;
+    }
+    point.first = -bSq / (2 * aSq);
+    cur_tx = point.first;
+    cur_ty = point.second;
     return point;
 }
 
@@ -228,6 +245,8 @@ void MySolution::setCircleParams(pair<double, double> d1,
     this->x0 = circle[0];
     this->y0 = circle[1];
     this->r = circle[2];
+    this->tx = cur_tx;
+    this->ty = cur_ty;
 }
 
 pair<double, double> MySolution::triangleCenter(pair<double, double> d1,
