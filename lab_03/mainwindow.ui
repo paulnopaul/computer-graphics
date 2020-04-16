@@ -17,20 +17,20 @@
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>20</y>
+      <x>10</x>
+      <y>10</y>
       <width>811</width>
       <height>651</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="singleLines">
      <attribute name="title">
       <string>Одинарные отрезки</string>
      </attribute>
-     <widget class="PixelLineDraw" name="widget" native="true">
+     <widget class="PixelLineDraw" name="singleLineDraw" native="true">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -40,7 +40,7 @@
        </rect>
       </property>
      </widget>
-     <widget class="QComboBox" name="comboBox">
+     <widget class="QComboBox" name="algorythmChoose">
       <property name="geometry">
        <rect>
         <x>580</x>
@@ -56,17 +56,27 @@
       </item>
       <item>
        <property name="text">
+        <string>Брезенхем int</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Брезенхем float</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Брезенхем с устранением ступенчатости</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
         <string>Ву</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>Брезенхем</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Брезенхем со сглаживанием</string>
+        <string>Библиотечный</string>
        </property>
       </item>
      </widget>
@@ -83,16 +93,347 @@
        <string>Алгоритм сортировки</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="pushButton">
+      <property name="geometry">
+       <rect>
+        <x>590</x>
+        <y>290</y>
+        <width>211</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Построить</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="x1Entry">
+      <property name="geometry">
+       <rect>
+        <x>590</x>
+        <y>200</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="y1Entry">
+      <property name="geometry">
+       <rect>
+        <x>700</x>
+        <y>200</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>640</x>
+        <y>180</y>
+        <width>16</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>X1</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_3">
+      <property name="geometry">
+       <rect>
+        <x>740</x>
+        <y>180</y>
+        <width>16</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Y1</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="colorChoose">
+      <property name="geometry">
+       <rect>
+        <x>580</x>
+        <y>130</y>
+        <width>211</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>Синий</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Красный</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Зеленый</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Желтый</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Черный</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Фоновый</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLabel" name="label_4">
+      <property name="geometry">
+       <rect>
+        <x>610</x>
+        <y>110</y>
+        <width>81</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Цвет</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_5">
+      <property name="geometry">
+       <rect>
+        <x>630</x>
+        <y>240</y>
+        <width>16</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>X2</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_6">
+      <property name="geometry">
+       <rect>
+        <x>740</x>
+        <y>240</y>
+        <width>16</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Y2</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="x2Entry">
+      <property name="geometry">
+       <rect>
+        <x>590</x>
+        <y>260</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="y2Entry">
+      <property name="geometry">
+       <rect>
+        <x>700</x>
+        <y>260</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="cleanButton">
+      <property name="geometry">
+       <rect>
+        <x>590</x>
+        <y>340</y>
+        <width>211</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Очистить</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="multipleLines">
      <attribute name="title">
       <string>Сравнение визуальных характеристик</string>
      </attribute>
-    </widget>
-    <widget class="QWidget" name="time">
-     <attribute name="title">
-      <string>Сравнение временных характеристик</string>
-     </attribute>
+     <widget class="PixelLineDraw" name="visualLineDraw" native="true">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>571</width>
+        <height>611</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_13">
+      <property name="geometry">
+       <rect>
+        <x>600</x>
+        <y>20</y>
+        <width>201</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Алгоритм сортировки</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="visualColorChoose">
+      <property name="geometry">
+       <rect>
+        <x>580</x>
+        <y>110</y>
+        <width>211</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>Синий</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Красный</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Зеленый</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Желтый</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Черный</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Фоновый</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QComboBox" name="visualAlgorithmChoose">
+      <property name="geometry">
+       <rect>
+        <x>580</x>
+        <y>50</y>
+        <width>211</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <item>
+       <property name="text">
+        <string>ЦДА</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Брезенхем int</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Брезенхем float</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Брезенхем с устранением ступенчатости</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Ву</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Библиотечный</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLabel" name="label_14">
+      <property name="geometry">
+       <rect>
+        <x>610</x>
+        <y>90</y>
+        <width>81</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Цвет</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="visualDrawButton">
+      <property name="geometry">
+       <rect>
+        <x>580</x>
+        <y>240</y>
+        <width>211</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Построить</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="degreeStepEntry">
+      <property name="geometry">
+       <rect>
+        <x>580</x>
+        <y>190</y>
+        <width>211</width>
+        <height>21</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_15">
+      <property name="geometry">
+       <rect>
+        <x>580</x>
+        <y>160</y>
+        <width>201</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Шаг изменения угла (градусы)</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="visualCleanButton">
+      <property name="geometry">
+       <rect>
+        <x>580</x>
+        <y>280</y>
+        <width>211</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Очистить</string>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>
