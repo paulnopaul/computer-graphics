@@ -38,6 +38,10 @@ private slots:
 
     void on_ellipseGroupDraw_clicked();
 
+    void on_clearButton_clicked();
+
+    void on_timeDraw_clicked();
+
 private:
 
     Ui::MainWindow *ui;
@@ -45,6 +49,10 @@ private:
     void updateColor();
 
     QColor figure_color;
+
+    void TrueDraw();
+
+    void TrueProlife();
 
     void AddEllipse(int x0, int y0, int a, int b);
 

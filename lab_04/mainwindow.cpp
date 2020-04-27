@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    updateColor();
 }
 
 MainWindow::~MainWindow()
@@ -19,9 +20,9 @@ Ellipse::Algo TypeFromName(const QString &name)
         return Ellipse::Algo::CANONICAL;
     else if (name == "Параметрическое уравнение")
         return Ellipse::Algo::PARAMETRIC;
-    else if (name == "Параметрическое уравнение")
+    else if (name == "Алгоритм Брезенхема")
         return Ellipse::Algo::BRESENHAM;
-    else if (name == "Параметрическое уравнение")
+    else if (name == "Алгоритм средней точки")
         return Ellipse::Algo::MIDPOINT;
     else
         return Ellipse::Algo::LIBRARY;
@@ -113,6 +114,7 @@ void MainWindow::on_circleDraw_clicked()
         r = ui->circleR->text().toInt(&ok);
     if (ok)
         AddCircle(x0, y0, r);
+    ui->drawer->Draw();
 }
 
 void MainWindow::on_ellipseDraw_clicked()
@@ -128,6 +130,13 @@ void MainWindow::on_ellipseDraw_clicked()
         b = ui->ellipseB->text().toInt(&ok);
     if (ok)
         AddEllipse(x0, y0, a, b);
+    ui->drawer->Draw();
+}
+
+void MainWindow::TrueDraw()
+{
+    ui->show_widget->setCurrentIndex(0);
+    ui->drawer->Draw();
 }
 
 void MainWindow::on_circleGroupDraw_clicked()
@@ -145,6 +154,7 @@ void MainWindow::on_circleGroupDraw_clicked()
         rstep = ui->circleGroupStep->text().toInt(&ok);
     if (ok)
         AddCircleGroup(x0, y0, r, rn, rstep);
+    TrueDraw();
 }
 
 void MainWindow::on_ellipseGroupDraw_clicked()
@@ -166,4 +176,22 @@ void MainWindow::on_ellipseGroupDraw_clicked()
         n = ui->ellipseGroupN->text().toInt(&ok);
     if (ok)
         AddEllipseGroup(x0, y0, a, b, astep, bstep, n);
+    TrueDraw();
+}
+
+void MainWindow::on_clearButton_clicked()
+{
+    ui->drawer->Clear();
+    TrueDraw();
+}
+
+void MainWindow::TrueProlife()
+{
+    ui->show_widget->setCurrentIndex(1);
+    ui->profiler->Profile();
+}
+
+void MainWindow::on_timeDraw_clicked()
+{
+    TrueProlife();
 }

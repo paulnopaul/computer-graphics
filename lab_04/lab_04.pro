@@ -22,14 +22,16 @@ SOURCES += \
     ellipse.cpp \
     main.cpp \
     mainwindow.cpp \
-    pixeldrawer.cpp
+    pixeldrawer.cpp \
+    profilewidget.cpp
 
 HEADERS += \
     circle.h \
     colorwidget.h \
     ellipse.h \
     mainwindow.h \
-    pixeldrawer.h
+    pixeldrawer.h \
+    profilewidget.h
 
 FORMS += \
     mainwindow.ui

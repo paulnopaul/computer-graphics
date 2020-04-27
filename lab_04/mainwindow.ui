@@ -14,16 +14,6 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="PixelDrawer" name="drawer" native="true">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>621</width>
-      <height>881</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="Line" name="line">
     <property name="geometry">
      <rect>
@@ -84,22 +74,22 @@
       <widget class="QComboBox" name="algoPick">
        <item>
         <property name="text">
-         <string>Каноническое уравнение</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
          <string>Параметрическое уравнение</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Алгоритм Брезенхема</string>
+         <string>Каноническое уравнение</string>
         </property>
        </item>
        <item>
         <property name="text">
          <string>Алгоритм средней точки</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Алгоритм Брезенхема</string>
         </property>
        </item>
        <item>
@@ -143,7 +133,7 @@
         <number>255</number>
        </property>
        <property name="value">
-        <number>255</number>
+        <number>100</number>
        </property>
       </widget>
      </item>
@@ -153,7 +143,7 @@
         <number>255</number>
        </property>
        <property name="value">
-        <number>255</number>
+        <number>0</number>
        </property>
       </widget>
      </item>
@@ -232,13 +222,25 @@
       </widget>
      </item>
      <item row="2" column="0">
-      <widget class="QLineEdit" name="circleX0"/>
+      <widget class="QLineEdit" name="circleX0">
+       <property name="text">
+        <string>200</string>
+       </property>
+      </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="circleY0"/>
+      <widget class="QLineEdit" name="circleY0">
+       <property name="text">
+        <string>200</string>
+       </property>
+      </widget>
      </item>
      <item row="2" column="2">
-      <widget class="QLineEdit" name="circleR"/>
+      <widget class="QLineEdit" name="circleR">
+       <property name="text">
+        <string>30</string>
+       </property>
+      </widget>
      </item>
      <item row="3" column="0" colspan="3">
       <widget class="QPushButton" name="circleDraw">
@@ -295,18 +297,30 @@
       </widget>
      </item>
      <item row="2" column="0">
-      <widget class="QLineEdit" name="ellipseX0"/>
+      <widget class="QLineEdit" name="ellipseX0">
+       <property name="text">
+        <string>300</string>
+       </property>
+      </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="ellipseY0"/>
+      <widget class="QLineEdit" name="ellipseY0">
+       <property name="text">
+        <string>300</string>
+       </property>
+      </widget>
      </item>
      <item row="2" column="2">
-      <widget class="QLineEdit" name="ellipseA"/>
+      <widget class="QLineEdit" name="ellipseA">
+       <property name="text">
+        <string>100</string>
+       </property>
+      </widget>
      </item>
      <item row="2" column="3">
       <widget class="QLineEdit" name="ellipseB">
        <property name="text">
-        <string/>
+        <string>50</string>
        </property>
       </widget>
      </item>
@@ -344,7 +358,11 @@
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="circleGroupStep"/>
+      <widget class="QLineEdit" name="circleGroupStep">
+       <property name="text">
+        <string>10</string>
+       </property>
+      </widget>
      </item>
      <item row="1" column="1">
       <widget class="QLabel" name="label_18">
@@ -354,7 +372,11 @@
       </widget>
      </item>
      <item row="2" column="0">
-      <widget class="QLineEdit" name="circleGroupRN"/>
+      <widget class="QLineEdit" name="circleGroupRN">
+       <property name="text">
+        <string>300</string>
+       </property>
+      </widget>
      </item>
      <item row="3" column="0" colspan="2">
       <widget class="QPushButton" name="circleGroupDraw">
@@ -376,7 +398,11 @@
     </property>
     <layout class="QGridLayout" name="ellipseGroup">
      <item row="2" column="0">
-      <widget class="QLineEdit" name="ellipseGroupAStep"/>
+      <widget class="QLineEdit" name="ellipseGroupAStep">
+       <property name="text">
+        <string>10</string>
+       </property>
+      </widget>
      </item>
      <item row="1" column="0">
       <widget class="QLabel" name="label_20">
@@ -386,7 +412,11 @@
       </widget>
      </item>
      <item row="2" column="2">
-      <widget class="QLineEdit" name="ellipseGroupN"/>
+      <widget class="QLineEdit" name="ellipseGroupN">
+       <property name="text">
+        <string>10</string>
+       </property>
+      </widget>
      </item>
      <item row="1" column="1">
       <widget class="QLabel" name="label_21">
@@ -396,7 +426,11 @@
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="ellipseGroupBStep"/>
+      <widget class="QLineEdit" name="ellipseGroupBStep">
+       <property name="text">
+        <string>10</string>
+       </property>
+      </widget>
      </item>
      <item row="0" column="0" colspan="3">
       <widget class="QLabel" name="label_19">
@@ -466,7 +500,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="clearButton">
     <property name="geometry">
      <rect>
       <x>640</x>
@@ -490,6 +524,43 @@
     <property name="flat">
      <bool>false</bool>
     </property>
+   </widget>
+   <widget class="QStackedWidget" name="show_widget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>611</width>
+      <height>881</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>1</number>
+    </property>
+    <widget class="QWidget" name="page">
+     <widget class="PixelDrawer" name="drawer" native="true">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>611</width>
+        <height>881</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_2">
+     <widget class="ProfileWidget" name="profiler" native="true">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>611</width>
+        <height>881</height>
+       </rect>
+      </property>
+     </widget>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -515,6 +586,12 @@
    <class>PixelDrawer</class>
    <extends>QWidget</extends>
    <header>pixeldrawer.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ProfileWidget</class>
+   <extends>QWidget</extends>
+   <header>profilewidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

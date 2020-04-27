@@ -8,6 +8,8 @@
 #include <optional>
 #include <functional>
 
+#define PI 3.14159265359
+
 class Ellipse
 {
 public:
@@ -52,6 +54,10 @@ protected:
     std::optional<std::vector<QPoint>> points_;
     double x0_, y0_, a_, b_;
 };
+
+void QuartMirror(std::vector<QPoint> &points, int x, int y, int x0, int y0);
+
+void OctMirror(std::vector<QPoint> &points, int x, int y, int x0, int y0);
 
 
 namespace Ellipses

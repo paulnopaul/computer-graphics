@@ -10,7 +10,6 @@
 
 #include "ellipse.h"
 #include "circle.h"
-
 class PaintObject
 {
 public:
@@ -57,7 +56,9 @@ public:
     void AddEllipse(const Ellipse &ellipse, QColor color);
 
     void Draw();
+
 private:
+    void DrawEvent();
     PaintObjects objects;
 };
 

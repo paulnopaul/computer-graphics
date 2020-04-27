@@ -42,18 +42,30 @@ PixelDrawer::PixelDrawer(QWidget *parent) : QWidget(parent)
 {
 }
 
-void PixelDrawer::paintEvent(QPaintEvent *event)
+void PixelDrawer::DrawEvent()
 {
     QPainter p(this);
     p.fillRect(this->rect(), Qt::white);
-    this->DrawScale(p, 50);
     this->DrawObjects(p);
+    this->DrawScale(p, 50);
+}
+
+void PixelDrawer::Draw()
+{
+    this->update();
+}
+
+
+
+void PixelDrawer::paintEvent(QPaintEvent *event)
+{
+    DrawEvent();
 }
 
 void PixelDrawer::DrawObject(QPainter &painter, const PaintObject &object)
 {
     painter.setPen(object.GetColor());
-    if (object.GetEllipse().IsLibrary())
+    if (!object.GetEllipse().IsLibrary())
         for (const QPoint &point: object)
             painter.drawPoint(point);
     else
@@ -80,4 +92,18 @@ void PixelDrawer::DrawScale(QPainter &painter, int step)
         painter.drawLine(0, y, 10, y);
         painter.drawText(12, y - 2, QString(to_string(y).c_str()));
     }
+}
+void PixelDrawer::Clear()
+{
+    this->objects.clear();
+}
+
+void PixelDrawer::Add(const PaintObject &object)
+{
+    this->objects.push_back(object);
+}
+
+void PixelDrawer::AddEllipse(const Ellipse &ellipse, QColor color)
+{
+    this->objects.emplace_back(ellipse, color);
 }
