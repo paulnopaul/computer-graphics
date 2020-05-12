@@ -27,35 +27,19 @@ double Circle::GetR() const
 
 namespace Circles
 {
-    double CanonicalUpPixel(double x, double x0, double y0, double r)
+    double CanonicalUpPixel(double x, double r)
     {
-        return round(y0 + sqrt(r * r - x * x + 2 * x * x0 - x0 * x0));
-    }
-
-    double CanonicalDownPixel(double x, double x0, double y0, double r)
-    {
-        return round(y0 - sqrt(r * r - x * x + 2 * x * x0 - x0 * x0));
+        return ceil(sqrt(r * r - x * x));
     }
 
     vector<QPoint> Canonical(double x0, double y0, double r)
     {
         vector<QPoint> points;
-        int xn = round(x0 + r);
-        for (int x = round(x0 - r); x <= xn; ++x)
+        int xn = ceil(r);
+        for (int x = 0; x <= xn; ++x)
         {
-            int up_y =      CanonicalUpPixel(x, x0, y0, r);
-            int down_y =    CanonicalDownPixel(x, x0, y0, r);
-            points.emplace_back(x, CanonicalUpPixel(x, x0, y0, r));
-            points.emplace_back(x, CanonicalDownPixel(x, x0, y0, r));
-        }
-
-        int yn = round(y0 + r);
-        for (int y = round(y0 - r); y <= yn; ++y)
-        {
-            int right_x =   CanonicalUpPixel(y, x0, y0, r);
-            int left_x =    CanonicalDownPixel(y, x0, y0,r);
-            points.emplace_back(right_x, y);
-            points.emplace_back(left_x, y);
+            int y = CanonicalUpPixel(x, r);
+            OctMirror(points, x, y, x0, y0);
         }
         return points;
     }
@@ -65,11 +49,11 @@ namespace Circles
         vector<QPoint> points;
         double step = 1 / r;
 
-        for (double t = 0; t <= 2 * PI; t += step)
+        for (double t = 0; t < PI / 2 + step; t += step)
         {
-            int x = round(x0 + r * cos(t));
-            int y = round(y0 + r * sin(t));
-            points.emplace_back(x, y);
+            int x = round(r * cos(t));
+            int y = round(r * sin(t));
+            QuartMirror(points, x, y, x0, y0);
         }
 
         return points;
@@ -125,7 +109,7 @@ namespace Circles
             OctMirror(points, x, y, x0, y0);
 
             y++;
-            if (d > 0)
+            if (d >= 0)
             {
                 x--;;
                 d -= 2 * (x - 1);

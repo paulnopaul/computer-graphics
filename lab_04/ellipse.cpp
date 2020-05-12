@@ -112,35 +112,22 @@ void OctMirror(vector<QPoint> &points, int x, int y, int x0, int y0)
 
 namespace Ellipses
 {
-    int CanonicalUpPixel(int x, double x0, double y0, double a, double b)
-    {
-        return round(y0 - b  * sqrt(a*a - x * x + 2 * x * x0 - x0 * x0) / a);
-    }
-
-    int CanonicalDownPixel(int x, double x0, double y0, double a, double b)
-    {
-        return round(y0 + b  * sqrt(a*a - x * x + 2 * x * x0 - x0 * x0) / a);
-    }
 
     vector<QPoint> Canonical(double x0, double y0, double a, double b)
     {
         vector<QPoint> points;
-        int xn = round(x0 + a);
-        for (int x = round(x0 - a); x < xn; ++x)
+        int xn = a;
+        for (int x = 0; x < xn; ++x)
         {
-            int up_y =      CanonicalUpPixel(x, x0, y0, a, b);
-            int down_y =    CanonicalDownPixel(x, x0, y0, a, b);
-            points.emplace_back(x, up_y);
-            points.emplace_back(x, down_y);
+            int y = ceil(b * sqrt(a * a - x * x) / a);;
+            QuartMirror(points, x, y, x0, y0);
         }
 
-        int yn = round(x0 + b);
-        for (int y = round(x0 - b); y < yn; ++y)
+        int yn = b;
+        for (int y = 0; y <= yn; ++y)
         {
-            int right_x =   CanonicalUpPixel(y, x0, y0, b, a);
-            int left_x =    CanonicalDownPixel(y, x0, y0, b, a);
-            points.emplace_back(right_x, y);
-            points.emplace_back(left_x, y);
+            int x = ceil(a * sqrt(b * b - y * y) / b);
+            QuartMirror(points, x, y, x0, y0);
         }
         return points;
     }
@@ -149,18 +136,10 @@ namespace Ellipses
     {
         vector<QPoint> points; 
         double step = 1 / max(a, b);
-        double tn = step + PI;
-        for (double t = 0; t < tn; t += step)
+        for (double t = 0; t < PI / 2 + step; t += step)
         {
-            double v1 = a * cos(t), v2 = a * sin(t);
-
-            double x = int(x0 + v1);
-            double y = int(y0 + v2);
-            points.emplace_back(x, y);
-
-            x = int(x0 - v1);
-            y = int(y0 - v2);
-            points.emplace_back(x, y);
+            int x = round(a * cos(t)), y = round(b * sin(t));
+            QuartMirror(points, x, y, x0, y0);
         }
         return points;
     }
@@ -168,35 +147,36 @@ namespace Ellipses
     vector<QPoint> Bresenham(double x0, double y0, double a, double b)
     {
         vector<QPoint> points;
-        int x = 0;
-        int y = b;
-        int bb = b * b;
-        int aa = a * a;
-        int delta = bb - aa * (2 * b + 1);
+
+        long x = 0;
+        long y = b;
+        long bb = b * b;
+        long aa = a * a;
+        long d = bb - aa * (2 * b + 1);
 
         while (y >= 0)
         {
-             QuartMirror(points, x, y, x0, y0);
-            if (delta <= 0)
+            QuartMirror(points, x, y, x0, y0);
+            if (d <= 0)
             {
-                int delta_temp = 2 * delta + aa * (2 * y - 1);
+                long d1 = 2 * d + aa * (2 * y - 1);
                 x += 1;
-                delta += bb * (2 * x + 1);
-                if (delta_temp >= 0)
+                d += bb * (2 * x + 1);
+                if (d1 >= 0)
                 {
                     y -= 1;
-                    delta += aa * (1 - 2 * y);
+                    d += aa * (1 - 2 * y);
                 }
             }
             else
             {
-                int delta_temp = 2 * delta + bb * (1 - 2 * x);
+                long d2 = 2 * d + bb * (1 - 2 * x);
                 y -= 1;
-                delta += aa * (1 - 2 * y);
-                if (delta_temp < 0)
+                d += aa * (1 - 2 * y);
+                if (d2 < 0)
                 {
                     x += 1;
-                    delta += bb * (2 * x + 1);
+                    d += bb * (2 * x + 1);
                 }
             }
         }
@@ -206,12 +186,12 @@ namespace Ellipses
     vector<QPoint> MidPoint(double x0, double y0, double a, double b)
     {
         vector<QPoint> points;
-        int bb = b * b, aa = a * a;
-        int x = 0, y = b;
-        int delta = bb - aa * b + 0.25 * aa;
-        int dx = 2 * bb * x;
-        int dy = 2 * aa * y;
+        long bb = b * b, aa = a * a;
+        long x = 0, y = b;
+        long dx = 2 * bb * x;
+        long dy = 2 * aa * y;
 
+        double p1 = bb - aa * b + 0.25 * aa;
         while (dx < dy)
         {
             QuartMirror(points, x, y, x0, y0);
@@ -219,29 +199,29 @@ namespace Ellipses
             x++;
             dx += 2 * bb;
 
-            if (delta >= 0)
+            if (p1 >= 0)
             {
                 y--;
                 dy -= 2 * aa;
-                delta -= dy;
+                p1 -= dy;
             }
-            delta += dx + bb;
+            p1 += dx + bb;
         }
-        delta = bb * (x + 0.5) * (x + 0.5)  + aa * (y - 1) * (y - 1)  - aa * bb;
 
+        double p2 = bb * (x + 0.5) * (x + 0.5)  + aa * (y - 1) * (y - 1)  - aa * bb;
         while (y >= 0)
         {
             QuartMirror(points, x, y, x0, y0);
             y--;
             dy -= 2 * aa;
 
-            if (delta <= 0)
+            if (p2 <= 0)
             {
                 x++;
                 dx += 2 * bb;
-                delta += dx;
+                p2 += dx;
             }
-            delta -= dy - aa;
+            p2 -= dy - aa;
         }
         return points;
     }

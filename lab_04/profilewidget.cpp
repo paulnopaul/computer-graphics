@@ -13,7 +13,7 @@ double ProfileEllipse(Ellipse::Algo algo, double a, double b)
     Ellipse e(algo, 0, 0, a, b);
     steady_clock::time_point finish(steady_clock::now());
     auto dur = finish - start;
-    return duration_cast<nanoseconds>(dur).count();
+    return duration_cast<milliseconds>(dur).count();
 }
 
 double ProfileCircle(Ellipse::Algo algo, double r)
@@ -22,7 +22,7 @@ double ProfileCircle(Ellipse::Algo algo, double r)
     Circle c(algo, 0, 0, r);
     steady_clock::time_point finish(steady_clock::now());
     auto dur = finish - start;
-    return duration_cast<nanoseconds>(dur).count();
+    return duration_cast<milliseconds>(dur).count();
 }
 
 QLineSeries *CreateEllipseSeries(Ellipse::Algo algo,
@@ -72,10 +72,10 @@ QLineSeries *CreateCircleSeries(Ellipse::Algo algo,
 QLineSeries *ProfileWidget::createEllipseSeries(Ellipse::Algo algo)
 {
     double a0 =     2; // 1'000;
-    double an =     17002; // 100'000;
-    double astep =  1000; // 1'000;
+    double an =     170002; // 100'000;
+    double astep =  10000; // 1'000;
     double b0 =     2; // 1'000;
-    double bstep =  0;
+    double bstep =  10000;
 
     return CreateEllipseSeries(algo, a0, an, astep, b0, bstep);
 }
@@ -84,8 +84,8 @@ QLineSeries *ProfileWidget::createEllipseSeries(Ellipse::Algo algo)
 QLineSeries *ProfileWidget::createCircleSeries(Ellipse::Algo algo)
 {
     double r0 =     2; // 1'000;
-    double rn =     17002; // 100'000;
-    double step =   1000; // 1'000;
+    double rn =     170002; // 100'000;
+    double step =   10000; // 1'000;
 
     return CreateCircleSeries(algo, r0, rn, step);
 }
